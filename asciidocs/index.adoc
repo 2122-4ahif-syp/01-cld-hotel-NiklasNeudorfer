@@ -1,6 +1,6 @@
-= My Project
-firstname lastname
-1.0.0, yyyy-mm-dd: Some notes
+= Hotel & Kino CLD
+Niklas Neudorfer
+1.0.0, 2021-10-11
 ifndef::imagesdir[:imagesdir: images]
 //:toc-placement!:  // prevents the generation of the doc at this position, so it can be printed afterwards
 :sourcedir: ../src/main/java
@@ -14,8 +14,13 @@ ifdef::backend-html5[]
 // print the toc here (not at the default position)
 //toc::[]
 
-== Header 1
+=== Hotel CLD
+
+plantuml::plantuml/Hotel.puml[]
 
 
-=== Header 2
+=== Kino CLD
+
+plantuml::plantuml/Kino.puml[]
+
 
