@@ -72,15 +72,13 @@ Sitz"*"-->"1"Reihe:hat <
 Vorstellungspreis"*"-->"1"Reihe
 Vorstellungspreis"*"-->"1"Vorstellung
 Vorstellung"*"-->"1"Film
-Person--Film
-(Film,Person)..Engagement
+Person "*"--"*" Film
+(Film,Person) ..Engagement
 Rolle"1"<--"*"Engagement
 
 Genre "1"<--"*" Film
 Saal "*"-->"1" Kino
 Karte "*"-->"1" Sitz
 Karte "*"-->"1" Vorstellung
-
 Karte "*"-->"1" Adresse
-
 @enduml

@@ -37,10 +37,6 @@ enum Fach{
 class Raumpfleger{
 
 }
-
-class Putzung{
-}
-
 class Gast{
   - Kundennr: int
   - name: String
@@ -70,22 +66,34 @@ class Kaufung{
   - anzahl: int
 }
 
-Hotel "1"---left---"*" Zimmer : hat >
-Adresse "1"-l-"*" Mitarbeiter
-Betreuer -u-|> Mitarbeiter
-Raumpfleger -u-|> Mitarbeiter
-Raumpfleger "*"--"*" Zimmer
-(Raumpfleger, Zimmer) .. Putzung
-Betreuer -- Fach
-Adresse -r- Gast
-Gast --"*" Buchung
-Buchung "*"--"1" Zimmer
-Zimmer "*"-l-"1" Kategorie
-Luxuspaket --"1..*" BasisPaket
-Buchung "*"-r-"*" Leistungspaket
-Leistungspaket -r-|> Luxuspaket
+
+note "Luxuspaket & BasisPaket \nerben von Leistungspaket" as Note
+note "Betreuer & Raumpfleger \nerben von Mitarbeiter" as workerNote
+
+Hotel "1"<----"*" Zimmer : hat >
+Adresse "1"<--"*" Mitarbeiter : hat <
+
+Betreuer --|> Mitarbeiter
+Raumpfleger --|> Mitarbeiter
+
+Raumpfleger "*"--"*" Zimmer : reinigt >
+(Raumpfleger, Zimmer) .. Reinigung
+Betreuer -r- Fach
+Adresse "1"<--l-"*" Gast : wohnt <
+
+Gast "1"<--"*" Buchung : bucht >
+Buchung "*"-->"1" Zimmer : beinhaltet >
+Zimmer "*"-->"1" Kategorie : hat >
+Luxuspaket --"1..*" BasisPaket : beinhaltet >
+Buchung "*"--"*" Leistungspaket : hat >
+Leistungspaket --|> Luxuspaket
 Leistungspaket --|> BasisPaket
-Leistungspaket -- Betreuer
+
+Leistungspaket "*"--"*" Betreuer : betreut <
 (Betreuer, Leistungspaket) .. Betreuung
 (Buchung, Leistungspaket) .. Kaufung
+
+Leistungspaket .l. Note
+Mitarbeiter .d. workerNote
+
 @enduml
