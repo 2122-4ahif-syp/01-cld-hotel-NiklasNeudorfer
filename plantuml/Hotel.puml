@@ -1,0 +1,99 @@
+@startuml
+class Hotel{
+    - hotelID: int
+    - stadt: String
+}
+
+class Zimmer{
+  - preis: BigDecimal
+  - nummer: int
+  - personen: int
+  - kategorie: Kategorie
+}
+
+class Kategorie{
+  - id: int
+  - bezeichung: String
+}
+
+class Mitarbeiter{
+  - name: String
+  - addresse: Adresse
+  - svnr: long
+}
+
+class Adresse{
+
+}
+
+class Betreuer{
+  - fach: Fach
+}
+
+enum Fach{
+ - fach: String
+}
+
+class Raumpfleger{
+
+}
+class Gast{
+  - Kundennr: int
+  - name: String
+  - addresse: Adresse
+}
+
+class Buchung{
+  - von: LocalDate
+  - bis: LocalDate
+  - zimmer: Zimmer
+}
+
+class Leistungspaket{
+  - bezeichung: String
+  - preis: BigDecimal
+}
+
+class BasisPaket{
+
+}
+
+class Luxuspaket{
+
+}
+
+class Kaufung{
+  - anzahl: int
+}
+
+
+note "Luxuspaket & BasisPaket \nerben von Leistungspaket" as Note
+note "Betreuer & Raumpfleger \nerben von Mitarbeiter" as workerNote
+
+Hotel "1"<----"*" Zimmer : hat >
+Adresse "1"<--"*" Mitarbeiter : hat <
+
+Betreuer --|> Mitarbeiter
+Raumpfleger --|> Mitarbeiter
+
+Raumpfleger "*"--"*" Zimmer : reinigt >
+(Raumpfleger, Zimmer) .. Reinigung
+Betreuer -r- Fach
+Adresse "1"<--l-"*" Gast : wohnt <
+
+Gast "1"<--"*" Buchung : bucht >
+Buchung "*"-->"1" Zimmer : beinhaltet >
+Zimmer "*"-->"1" Kategorie : hat >
+Luxuspaket --"1..*" BasisPaket : beinhaltet >
+Buchung "*"--"*" Leistungspaket : hat >
+Leistungspaket --|> Luxuspaket
+Leistungspaket --|> BasisPaket
+
+Leistungspaket "*"--"*" Betreuer : betreut <
+(Betreuer, Leistungspaket) .. Betreuung
+(Buchung, Leistungspaket) .. Kaufung
+
+Leistungspaket .l. Note
+Mitarbeiter .d. workerNote
+
+@enduml

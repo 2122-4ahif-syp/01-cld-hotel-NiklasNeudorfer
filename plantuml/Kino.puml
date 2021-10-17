@@ -1,0 +1,84 @@
+@startuml
+
+class Saal{
+    - kino Kino
+}
+class Film{
+    - genre: Genre
+    - titel: String
+}
+class Reihe{
+    - saal: Saal
+    - standardPreis: BigDecimal
+}
+class Vorstellung{
+    - datumUhrzeit: LocalDateTime
+}
+class Sitz{
+    -reihe: Reihe
+    -platz: int
+}
+class Vorstellungspreis{
+    -vorstellung: Vorstellung
+    -reihe: Reihe
+    -sonderPreis: BigDecimal
+}
+class Person{
+    -vorname: String
+    -nachname: String
+    -nationalitaet: String
+    -dob: LocalDate
+    -dod: LocalDate
+    -bemerkung: String
+}
+class Rolle{
+    -film: Film
+    -person: Person
+}
+class Engagement{
+    -film: Film
+    -person: Person
+}
+
+enum Genre{
+    - genre: String
+}
+
+class Karte{
+  - kino: Kino
+  - saal: Saal
+  - film: Film
+  - beginnZeit: LocalDate
+  - ID: long
+  - sitz: Sitz
+  - price: BigDecimal
+}
+
+class Kino{
+ - name: String
+ - adresse: Adresse
+ - ID: long
+}
+
+class Adresse{
+    plz: int
+    straße: String
+    ort: String
+}
+
+Reihe"*"-->"1"Saal:hat <
+Vorstellung"*"-->"1"Saal
+Sitz"*"-->"1"Reihe:hat <
+Vorstellungspreis"*"-->"1"Reihe
+Vorstellungspreis"*"-->"1"Vorstellung
+Vorstellung"*"-->"1"Film
+Person "*"--"*" Film
+(Film,Person) ..Engagement
+Rolle"1"<--"*"Engagement
+
+Genre "1"<--"*" Film
+Saal "*"-->"1" Kino
+Karte "*"-->"1" Sitz
+Karte "*"-->"1" Vorstellung
+Karte "*"-->"1" Adresse
+@enduml
